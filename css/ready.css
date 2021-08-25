@@ -1,0 +1,29 @@
+#ready{
+  display: none;
+  text-align: center;
+}
+
+.container{
+  background-color: whitesmoke;
+  width:90%;
+  border-radius: 20px;
+  font-size: 20px;
+  text-align: center;
+}
+
+.box{
+  width : 150px;
+  height: 60px;
+  padding: 10px;
+  border : 1px solid gray;
+
+}
+
+table{
+  width : 100%;
+}
+
+th, td {
+  text-align: center;
+  font-size: 20px;
+}
