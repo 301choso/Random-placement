@@ -33,30 +33,70 @@
   </head>
   <body>
     <section id="main" class="mx-auto my-5 py-5">
+      <div class="container pt-3">
+
       <h1>랜덤 자리배치</h1>
       <div class="col-lg-6 col-md-6 col-sm-10 col-12 mx-auto my-2">
         <img src="./img/school.ico" alt="schoolImage">
       </div>
-      <h2>이름을 입력하세요</h2>
-      <div class="inputForm"></div>
+      <h2>내용을 입력하세요</h2>
+      <div class="inputFormA"></div>
+      <form id='desk'>
+          <div class="row" id=inputRow></div>
+
+    </form>
+      </div>
     </section>
 
       <script type="text/javascript">
-      var inputForm = document.querySelector(".inputForm");
-      var Form ="<form>";
-        for(let i=0;i<22;i++){
-          Form += i+1 +"번 <input type='text' name='"+i+"' class='mt-1'><br/>";
+      <!--1. 행,열갯수 지정-->
+      var inputFormA = document.querySelector(".inputFormA");
+      var FormA ="<form id='count'>";
+
+      FormA +="<select name='row' class='mx-1'>";
+        for(let r=1;r<=5;r++){
+          FormA +="<option value='"+r+"'>"+r+"분단</option>";
         }
-      Form+="<input type='submit' value='배치시작' class='mt-3'></form>";
-      inputForm.innerHTML=Form;
+      FormA +="</select>";
+      FormA +="<select name='col' class='mx-1'>";
+        for(let c=1;c<=5;c++){
+          FormA +="<option value='"+c+"'>"+c+"줄</option>";
+        }
+      FormA +="</select><input type='submit' value='입력하기' class='btn btn-outline-warning btn-sm mx-2'></form>";
+      inputFormA.innerHTML=FormA;
 
+      <!--2. 동적 폼 생성-->
       jQuery(function() {
-        jQuery('form').submit(function(event) {
+        jQuery('#count').submit(function(event) {
           event.preventDefault();
-          var param = jQuery(this).serializeArray();
-          console.log(param);
 
-          showTable(param);
+          const r =jQuery('#count [name="row"]').val();
+          const c =jQuery('#count [name="col"]').val();
+
+          var inputRow = document.querySelector("#inputRow");
+          let cnt=0;
+          var FormB ="";
+
+            for(let i=0;i<r;i++){
+              FormB += " <div class='col'>";
+              for(let j=0;j<c;j++){
+                cnt++;
+              FormB += cnt +"번 <input type='text' name='"+cnt+"' class='mt-1'><br/>"; //( <input type='checkbox' id='check'"+cnt+"> 고정 )
+              }
+              FormB += "</div><br/>";
+            }
+            FormB +=  "<div><input type='submit' value='배치시작' class='start mt-3 col-sm-4'></div>";
+          inputRow.innerHTML=FormB;
+
+            <!--3. 배열 생성 및 랜덤 섞기-->
+            jQuery(function() {
+              jQuery('#desk').submit(function(event) {
+                event.preventDefault();
+                var param = jQuery(this).serializeArray();
+                param.sort(() => Math.random()-0.5);
+                showTable(param);
+                });
+              });
           });
         });
       </script>
@@ -67,21 +107,8 @@
       <div class="box mx-auto">
           <h2>교탁</h2>
       </div>
-
-       <div class="row">
-       </div>
-     </div>
-     <script type="text/javascript">
-     var Row = document.querySelector(".row");
-     var column="";
-       for(let i=1;i<=5;i++){
-        column+= "<div class='col'>";
-        column+= "<div class=line"+i+"></div>";
-        column+= "</div>";
-       }
-
-     Row.innerHTML = column;
-     </script>
+      <div class="row" id="printRow"></div>
+    </div>
 
     <span id='editbtn'><button type='button' id='btn' onclick="onl()">수정</button></span>
     <button type="button" class="printMode my-3" onclick="window.print()">인쇄하기</button>

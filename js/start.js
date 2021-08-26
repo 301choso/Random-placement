@@ -14,65 +14,38 @@ function showTable(seat){
     },200)
   },200)
 
-seat.sort(() => Math.random()-0.5);
+  let r =jQuery('#count [name="row"]').val();
+  let c =jQuery('#count [name="col"]').val();
 
-  var table1="";
-  var table2="";
-  var table3="";
-  var table4="";
-  var table5="";
+  setTable();
 
-  var line1 = document.querySelector(".line1");
-  var line2 = document.querySelector(".line2");
-  var line3 = document.querySelector(".line3");
-  var line4 = document.querySelector(".line4");
-  var line5 = document.querySelector(".line5");
-  //첫번째 분단(테이블)
-  table1 += "<table class='table table-bordered mt-3'>";
-      for (i = 0; i < 4; i++) {
-          table1 += "<tr>";
-          table1 += "<td id ="+i+">" + (Number(seat[i].name)+1) + " : "+ seat[i].value +"</td>";
-          table1 += "</tr>";
+  let count=0;
+  for(let n=1;n<=r;n++){
+
+  var tablen="";
+  var linen = document.querySelector(".line"+n);
+
+  tablen += "<table class='table table-bordered mt-3'>";
+      for (let i = 1; i <= c; i++) {
+        count++;
+          tablen += "<tr>";
+          tablen += "<td id ="+count+">" + seat[count-1].name + " : "+ seat[count-1].value +"</td>";
+          tablen += "</tr>";
       }
-     table1 += "</table></br>";
-     line1.innerHTML =  table1;
+     tablen += "</table></br>";
+     linen.innerHTML =  tablen;
+   }
+ }
 
-  //두번째 분단(테이블)
-  table2 += "<table class='table table-bordered mt-3'>";
-       for (i = 4; i < 9; i++) {
-          table2 += "<tr>";
-          table2 +="<td id ="+i+">" + (Number(seat[i].name)+1) + " : "+ seat[i].value +"</td>";
-          table2 += "</tr>";
-       }
-      table2 += "</table></br>";
-      line2.innerHTML =  table2;
+  function setTable(){
+    var Row = document.querySelector("#printRow");
+    const co =jQuery('#count [name="row"]').val();
 
-  //세번째 분단(테이블)
-  table3 += "<table class='table table-bordered mt-3'>";
-       for (i = 9; i < 14; i++) {
-          table3 += "<tr>";
-          table3 +="<td id ="+i+">" + (Number(seat[i].name)+1) + " : "+ seat[i].value +"</td>";
-          table3 += "</tr>";
-       }
-      table3 += "</table></br>";
-      line3.innerHTML =  table3;
-      //4
-      table4 += "<table class='table table-bordered mt-3'>";
-           for (i = 14; i < 18; i++) {
-              table4 += "<tr>";
-              table4 +="<td id ="+i+">" + (Number(seat[i].name)+1) + " : "+ seat[i].value +"</td>";
-              table4 += "</tr>";
-           }
-          table4 += "</table></br>";
-          line4.innerHTML =  table4;
-        //5
-        table5 += "<table class='table table-bordered mt-3'>";
-             for (i = 18; i < 22; i++) {
-                table5 += "<tr>";
-                table5 += "<td id ="+i+">" + (Number(seat[i].name)+1) + " : "+ seat[i].value +"</td>";
-                table5 += "</tr>";
-             }
-            table5 += "</table></br>";
-            line5.innerHTML =  table5;
-
-}
+    var column="";
+      for(let i=1;i<=co;i++){
+       column+= "<div class='col'>";
+       column+= "<div class=line"+i+"></div>";
+       column+= "</div>";
+      }
+    Row.innerHTML = column;
+  }
